@@ -1,0 +1,33 @@
+server:
+  port: 80
+spring:
+  application:
+    name: geo
+  jackson:
+    time-zone: GMT+8
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://47.99.243.32:3306/mh2g?useUnicode=true&useSSL=false&characterEncoding=utf8
+      username: tigrex
+      password: 123456
+  redis:
+    host: 47.99.243.32
+    port: 6379
+    timeout: 30s
+    password: 123456
+    jedis:
+      pool:
+        max-active: 3
+        max-idle: 3
+        min-idle: 1
+        max-wait: 500ms
+  task:
+    execution:
+      pool:
+        core-size: 8
+        max-size: 50
+        queue-capacity: 200
+        keep-alive: 60s
+      thread-name-prefix: geo-

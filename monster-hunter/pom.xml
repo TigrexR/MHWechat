@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.tigrex</groupId>
+		<artifactId>mhwechat</artifactId>
+		<version>1.0.0</version>
+	</parent>
+
+	<artifactId>monster-hunter</artifactId>
+	<version>1.0.0</version>
+	<packaging>pom</packaging>
+	<name>monster-hunter</name>
+
+	<modules>
+		<module>monster-hunter-sdk</module>
+		<module>monster-hunter-service</module>
+	</modules>
+</project>

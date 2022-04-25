@@ -1,8 +1,8 @@
 server:
-  port: 80
+  port: 8081
 spring:
   application:
-    name: geo
+    name: monster-hunter
   jackson:
     time-zone: GMT+8
   datasource:
@@ -30,4 +30,4 @@ spring:
         max-size: 50
         queue-capacity: 200
         keep-alive: 60s
-      thread-name-prefix: geo-
+      thread-name-prefix: monster-hunter-

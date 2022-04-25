@@ -61,6 +61,7 @@ public class HttpUtils {
             inputStreamReader.close();
             inputStream.close();
             httpUrlConn.disconnect();
+            log.info(buffer.toString());
             return buffer.toString();
         } catch (Exception e) {
             log.error("调用出错：" + e);

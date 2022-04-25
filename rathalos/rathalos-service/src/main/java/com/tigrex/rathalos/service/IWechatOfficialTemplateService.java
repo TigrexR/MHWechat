@@ -15,5 +15,5 @@ public interface IWechatOfficialTemplateService {
      * @param query query
      * @return list
      */
-    List<WechatOfficialTemplateBO> getTemplates(WechatOfficialTemplateQuery query);
+    List<WechatOfficialTemplateBO> listTemplates(WechatOfficialTemplateQuery query);
 }

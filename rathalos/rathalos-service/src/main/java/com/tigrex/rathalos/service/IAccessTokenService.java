@@ -11,7 +11,8 @@ public interface IAccessTokenService {
     /**
      * get access token
      * @param appid appid
+     * @param secret secret
      * @return token
      */
-    AccessToken getAccessToken(String appid);
+    AccessToken getAccessToken(String appid, String secret);
 }

@@ -30,7 +30,7 @@ public class AccessTokenTemplate extends AbstractRedisTemplate<AccessToken> impl
     public CacheManager cacheManager() {
         Jackson2JsonRedisSerializer<AccessToken> serializer = getSerializer();
         RedisCacheConfiguration cacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
-                .disableCachingNullValues().entryTtl(Duration.ofSeconds(3600L))
+                .disableCachingNullValues().entryTtl(Duration.ofSeconds(7200L))
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(serializer));
         RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory);

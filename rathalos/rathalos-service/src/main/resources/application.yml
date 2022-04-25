@@ -2,7 +2,7 @@ server:
   port: 80
 spring:
   application:
-    name: geo
+    name: rathalos
   jackson:
     time-zone: GMT+8
   datasource:
@@ -30,4 +30,4 @@ spring:
         max-size: 50
         queue-capacity: 200
         keep-alive: 60s
-      thread-name-prefix: geo-
+      thread-name-prefix: rathalos-

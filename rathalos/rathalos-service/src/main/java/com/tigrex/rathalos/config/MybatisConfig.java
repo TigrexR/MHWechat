@@ -16,7 +16,7 @@ import com.zaxxer.hikari.HikariDataSource;
  * @author linus
  */
 @Configuration
-@MapperScan("com.tigrex.mh.mapper")
+@MapperScan("com.tigrex.rathalos.mapper")
 public class MybatisConfig {
 
     /**

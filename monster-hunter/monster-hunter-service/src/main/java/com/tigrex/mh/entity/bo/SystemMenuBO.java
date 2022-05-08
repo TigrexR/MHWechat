@@ -23,4 +23,6 @@ public class SystemMenuBO implements Serializable {
     private String parentCode;
     private String resourceCode;
     private String mark;
+    private String type;
+    private String url;
 }

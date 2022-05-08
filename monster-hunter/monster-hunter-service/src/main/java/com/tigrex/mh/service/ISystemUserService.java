@@ -16,19 +16,19 @@ public interface ISystemUserService {
      * @param userQuery
      * @return userBO
      */
-    SystemUserBO getUser(SystemUserQuery userQuery);
+    SystemUserBO get(SystemUserQuery userQuery);
 
     /**
      * user list
      * @param query query
      * @return list
      */
-    List<SystemUserBO> listUser(SystemUserQuery query);
+    List<SystemUserBO> list(SystemUserQuery query);
 
     /**
      * user page
      * @param query
      * @return
      */
-    Page<SystemUserBO> pageUser(SystemUserQuery query);
+    Page<SystemUserBO> page(SystemUserQuery query);
 }

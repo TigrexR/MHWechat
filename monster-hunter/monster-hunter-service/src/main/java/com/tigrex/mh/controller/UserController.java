@@ -6,7 +6,9 @@ import com.tigrex.mh.entity.query.SystemUserQuery;
 import com.tigrex.mh.entity.vo.SystemUserVO;
 import com.tigrex.mh.service.ISystemUserService;
 
-import com.tigrex.mh.utils.JwtUtils;
+import com.tigrex.core.utils.JwtUtils;
+import com.tigrex.rathalos.client.TemplateMessageClient;
+import com.tigrex.rathalos.entity.wechat.request.TemplateMessageRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +27,8 @@ public class UserController {
     private ISystemUserService userService;
     @Autowired
     private RedisTemplate<String, SystemUserBO> userRedisTemplate;
+    @Autowired
+    private TemplateMessageClient templateMessageClient;
 
     @RequestMapping(value = "/hello", method = RequestMethod.POST)
 	public String hello() {
@@ -45,6 +49,11 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(@RequestBody() SystemUserQuery userQuery) {
-        return JwtUtils.createToken("geo", "swc", userService.getUser(userQuery), 3600000L);
+        return JwtUtils.createToken("geo", "swc", userService.get(userQuery), 3600000L);
+    }
+
+    @RequestMapping(value = "/sendTemplateMessage", method = RequestMethod.POST)
+    public Integer sendTemplateMessage(@RequestBody() TemplateMessageRequest request) {
+        return templateMessageClient.sendTemplateMessage(request);
     }
 }

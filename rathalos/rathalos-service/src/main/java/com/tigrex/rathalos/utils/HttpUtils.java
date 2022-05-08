@@ -4,9 +4,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
 import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.security.SecureRandom;
 
 /**
  * @author linus
@@ -16,6 +20,8 @@ public class HttpUtils {
 
     public static final String GET = "GET";
     public static final String POST = "POST";
+    public static final String PUT = "PUT";
+    public static final String DELETE = "DELETE";
 
     public static String httpURLConnection(String requestUrl, String requestMethod, String requestParams) {
         log.info("requestUrl:" + requestUrl + ";requestMethod:" + requestMethod + ";requestParams" + requestParams);
@@ -28,7 +34,13 @@ public class HttpUtils {
         try {
             URL url = new URL(requestUrl);
             httpUrlConn = (HttpsURLConnection) url.openConnection();
-//            httpUrlConn.setSSLSocketFactory(ssf);
+            // 创建SSLContext对象，并使用我们指定的信任管理器初始化
+            SSLContext sslContext = SSLContext.getInstance("SSL", "SunJSSE");
+            TrustManager[] trustManagers = { new RathalosX509TrustManager() };
+            sslContext.init(null, trustManagers, new SecureRandom());
+            // 从上述SSLContext对象中得到SSLSocketFactory对象
+            SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+            httpUrlConn.setSSLSocketFactory(sslSocketFactory);
 
             httpUrlConn.setDoOutput(true);
             httpUrlConn.setDoInput(true);
@@ -49,7 +61,7 @@ public class HttpUtils {
             }
             // 将返回的输入流转换成字符串
             inputStream = httpUrlConn.getInputStream();
-            inputStreamReader = new InputStreamReader(inputStream, "utf-8");
+            inputStreamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
             bufferedReader = new BufferedReader(inputStreamReader);
 
             String str;
@@ -65,6 +77,7 @@ public class HttpUtils {
             return buffer.toString();
         } catch (Exception e) {
             log.error("调用出错：" + e);
+            return null;
         } finally {
             try {
                 if(inputStreamReader!=null){
@@ -84,7 +97,6 @@ public class HttpUtils {
                 }
             } catch (Exception e) {}
         }
-        return null;
     }
 
 //    public static void httpURLConnection() throws IOException {
@@ -115,45 +127,6 @@ public class HttpUtils {
 //        connection.setRequestProperty("Content-Type", "text/xml; charset=utf-8");
 //        connection.setRequestProperty("SOAPAction", "http://localhost:9001/user/hello");
 //        connection.setRequestMethod("POST");
-//        connection.setDoInput(true);
-//        connection.setDoOutput(true);
-//
-//        OutputStream out = connection.getOutputStream();
-//        out.write(b);
-//        out.close();
-//
-//        InputStreamReader isr = new InputStreamReader(connection.getInputStream());
-//        BufferedReader in = new BufferedReader(isr);
-//        StringBuilder sb = new StringBuilder();
-//        String inputLine;
-//        while (null != (inputLine = in.readLine())) {
-//            sb.append(inputLine);
-//        }
-//        System.out.println(sb);
-//    }
-//
-//    public static void httpURLConnection(String action, String method, String msg) throws IOException {
-//        URL url = new URL(action);
-//        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-//
-//        String xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
-//        xml += "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" " +
-//                "xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" " +
-//                "xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">";
-//        xml += "<soap:Body>";
-//        xml += "<mt xmlns=\"" + action + "\">";
-//        xml += "<msg>" + msg + "</msg>";
-//        xml += "</mt>";
-//        xml += "</soap:Body>";
-//        xml += "</soap:Envelope>";
-//
-//        ByteArrayOutputStream bout = new ByteArrayOutputStream();
-//        bout.write(xml.getBytes());
-//        byte[] b = bout.toByteArray();
-//        connection.setRequestProperty("Content-Length", String.valueOf(b.length));
-//        connection.setRequestProperty("Content-Type", "text/xml; charset=utf-8");
-//        connection.setRequestProperty("SOAPAction", action);
-//        connection.setRequestMethod(method);
 //        connection.setDoInput(true);
 //        connection.setDoOutput(true);
 //

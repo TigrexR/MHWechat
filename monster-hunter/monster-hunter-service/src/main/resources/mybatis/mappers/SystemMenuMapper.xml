@@ -2,4 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tigrex.mh.mapper.SystemMenuMapper">
 
+    <resultMap id="SystemMenuMap" type="com.tigrex.mh.entity.po.SystemMenu">
+        <id column="code" property="code" jdbcType="VARCHAR" javaType="String"/>
+        <result column="name" property="name" jdbcType="VARCHAR" javaType="String"/>
+    </resultMap>
+    
+    <select id="selectMenusByRoleCodes" resultMap="SystemMenuMap">
+        select role.code, role.name,  from system_menu menu
+        left join system_role_menu_relation re on menu.code = re.menu_code
+        where re.role_code in
+        <foreach collection="roleCodes" item="code" index="index" open="(" separator="," close=")">
+            #{code,jdbcType=VARCHAR}
+        </foreach>
+    </select>
 </mapper>

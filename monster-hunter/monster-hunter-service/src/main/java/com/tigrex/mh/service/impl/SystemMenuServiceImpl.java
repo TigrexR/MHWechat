@@ -3,25 +3,31 @@ package com.tigrex.mh.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.tigrex.core.utils.JacksonUtils;
 import com.tigrex.mh.entity.bo.SystemMenuBO;
+import com.tigrex.mh.entity.bo.SystemResourceBO;
 import com.tigrex.mh.entity.po.SystemMenu;
 import com.tigrex.mh.entity.query.SystemMenuQuery;
 import com.tigrex.mh.mapper.SystemMenuMapper;
 import com.tigrex.mh.service.ISystemMenuService;
+import com.tigrex.mh.service.ISystemResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author linus
  */
-@Service(value = "systemRoleService")
+@Service(value = "systemMenuService")
 public class SystemMenuServiceImpl implements ISystemMenuService {
 
     @Autowired
     private SystemMenuMapper mapper;
+    @Autowired
+    private ISystemResourceService systemResourceService;
     
     @Override
     public Integer saveOrUpdate(SystemMenuBO data) {
@@ -69,5 +75,19 @@ public class SystemMenuServiceImpl implements ISystemMenuService {
     @Override
     public Page<SystemMenuBO> page(SystemMenuQuery query) {
         return null;
+    }
+
+    @Override
+    public List<SystemMenuBO> selectMenusByRoleCodes(List<String> roleCodes) {
+        List<SystemMenuBO> menus = JacksonUtils.getJackson().convertValue(mapper.selectMenusByRoleCodes(roleCodes),
+                new TypeReference<List<SystemMenuBO>>() {});
+        List<SystemResourceBO> resources = systemResourceService.listResourcesByCode(
+                menus.stream().map(SystemMenuBO::getResourceCode).collect(Collectors.toList()));
+        menus.forEach(menu -> {
+            SystemResourceBO resource = resources.stream().filter(item -> item.getCode().equals(menu.getResourceCode()))
+                    .findFirst().orElse(new SystemResourceBO());
+            menu.setType(resource.getType()).setUrl(resource.getUrl());
+        });
+        return menus;
     }
 }

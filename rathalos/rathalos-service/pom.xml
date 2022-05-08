@@ -54,6 +54,19 @@
 			<version>${redisson.version}</version>
 		</dependency>
 		<!-- =====================================END=================================================== -->
+
+		<!-- nacos -->
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+			<version>${nacos-discovery.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+			<version>${nacos-config.version}</version>
+		</dependency>
+		<!-- ======================================END================================================ -->
 	</dependencies>
 
 	<build>

@@ -1,6 +1,7 @@
 package com.tigrex.mh.entity.bo;
 
 import java.io.Serializable;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,4 +26,6 @@ public class SystemUserBO implements Serializable{
     private String email;
     private String idCode;
     private Integer status;
+    private List<SystemRoleBO> roles;
+    private List<SystemMenuBO> menus;
 }

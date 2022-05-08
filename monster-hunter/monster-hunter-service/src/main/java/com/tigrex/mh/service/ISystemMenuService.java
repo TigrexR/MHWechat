@@ -2,6 +2,7 @@ package com.tigrex.mh.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tigrex.mh.entity.bo.SystemMenuBO;
+import com.tigrex.mh.entity.po.SystemMenu;
 import com.tigrex.mh.entity.query.SystemMenuQuery;
 
 import java.util.List;
@@ -45,4 +46,11 @@ public interface ISystemMenuService {
      * @return page
      */
     Page<SystemMenuBO> page(SystemMenuQuery query);
+
+    /**
+     * select menus by role codes
+     * @param roleCodes role codes
+     * @return list
+     */
+    List<SystemMenuBO> selectMenusByRoleCodes(List<String> roleCodes);
 }

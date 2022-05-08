@@ -20,4 +20,5 @@ public class SystemRoleQuery implements Serializable {
 
     private String code;
     private String name;
+    private String userCode;
 }
